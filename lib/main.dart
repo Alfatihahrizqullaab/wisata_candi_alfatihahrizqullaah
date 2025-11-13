@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wisata_candi_alfatihahrizqullaah/data/candi_data.dart';
+import 'package:wisata_candi_alfatihahrizqullaah/screens/search_screen.dart';
 import 'package:wisata_candi_alfatihahrizqullaah/screens/signin_screen.dart';
 import 'screens/detail_screen.dart';
 import 'screens/profile_screen.dart';
@@ -39,7 +40,8 @@ class MyApp extends StatelessWidget {
 
       
       
-      home: ProfileScreen(),
+      // home: ProfileScreen(),
+      home: SearchScreen(),
       // home: DetailScreen(candi: candiList[0]),
       // home: SignInScreen()
       // home: SignUpScreen()
