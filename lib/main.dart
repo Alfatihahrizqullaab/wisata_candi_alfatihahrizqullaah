@@ -38,7 +38,6 @@ class MyApp extends StatelessWidget {
       ),
 
       
-
       
       home: ProfileScreen(),
       // home: DetailScreen(candi: candiList[0]),
