@@ -74,6 +74,7 @@ flutter:
     - images/sari.jpeg
     - images/sewu.jpeg
     - images/singosari.jpeg
+    - images/placeholder_image.png
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images
 

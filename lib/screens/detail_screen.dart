@@ -10,6 +10,7 @@ class DetailScreen extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -149,7 +150,7 @@ class DetailScreen extends StatelessWidget{
                                       width: 2
                                     )
                                   ),
-                                  
+
                                   child: ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: CachedNetworkImage(
@@ -178,7 +179,7 @@ class DetailScreen extends StatelessWidget{
                   ],
                 ),
             )
-        
+
           ],
         ),
       ),
