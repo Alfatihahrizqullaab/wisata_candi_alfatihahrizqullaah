@@ -15,7 +15,7 @@ class _SearchScreenState extends State<SearchScreen> {
   String _searchQuery = '';
   final TextEditingController _searchController = TextEditingController();
 
-  @override
+@override
 void initState() {
   super.initState();
   _searchController.addListener(_onSearchChanged);
@@ -54,11 +54,14 @@ void dispose() {
             child: Container(
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Colors.deepPurple[50]       
+                color: Colors.deepPurple[50]!       
               ),child: TextField(
+                // TODO 6. Implementasi fitur pencaarian
+                controller: _searchController,
                 decoration: InputDecoration(
                   hintText: 'Cari Candi...',
                   prefixIcon: Icon(Icons.search),
+                  // TODO 7 Implementasi pengosongan input
                   border: InputBorder.none,
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.deepPurple),
@@ -69,54 +72,58 @@ void dispose() {
             ),
             ),
           // TODO 5. Buat ListView hasil pencarian sebagai anak dari column
-          ListView.builder(
-            itemCount: _filteredCandis.length,
-            itemBuilder: (context, index){
-              final candi = _filteredCandis[index];
-              return Card(
-                margin: EdgeInsets.symmetric(
-                  horizontal: 16,
-                  vertical: 4,
-                ),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      child: Padding(padding: EdgeInsets.all(8),
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: Image.asset(candi.imageAsset,
-                            fit: BoxFit.cover, 
-                        ),),
-                      ),
-                      width: 100,
-                      height: 100,
-                      
-                    ),
-                    Padding(
-                      padding: EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(candi.name, style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
+          Expanded(
+            child: ListView.builder(
+              itemCount: _filteredCandis.length,
+              itemBuilder: (context, index){
+                final candi = _filteredCandis[index];
+                // TODO 8 Implementasi GestureDetector dan Hero Animation
+                return Card(
+                  margin: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        child: Padding(padding: EdgeInsets.all(8),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(candi.imageAsset,
+                              fit: BoxFit.cover, 
                           ),),
-                          SizedBox(height: 4,),
-                          Text(candi.location, style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold
-                          ),
-                          )
-                        ],
-                    ),
-                    ),
-                    
-                  ],
-                ),
-              );
+                        ),
+                        width: 100,
+                        height: 100,
+                        
+                      ),
+                      Padding(
+                        padding: EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(candi.name, style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold
+                            ),),
+                            SizedBox(height: 4,),
+                            Text(candi.location, style: TextStyle(
+                              fontSize: 12,
+                              color: Colors.grey
+                            ),
+                            )
+                          ],
+                      ),
+                      ),
+                      
+                    ],
+                  ),
+                );
             },
-          )
+          ),
+          ),
+
         ],
       ),
     );
