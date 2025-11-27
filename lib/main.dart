@@ -21,32 +21,30 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Wisata Candi',
-      theme: ThemeData(
-        appBarTheme:  const AppBarTheme(
-          iconTheme: IconThemeData(color: Colors.deepPurple),
-          titleTextStyle: TextStyle(
-            color: Colors.deepPurple,
-            fontSize: 20,
-            fontWeight: FontWeight.bold,
+        debugShowCheckedModeBanner: false,
+        title: 'Wisata Candi',
+        theme: ThemeData(
+          appBarTheme: const AppBarTheme(
+            iconTheme: IconThemeData(color: Colors.deepPurple),
+            titleTextStyle: TextStyle(
+              color: Colors.deepPurple,
+              fontSize: 20,
+              fontWeight: FontWeight.bold,
+            ),
           ),
+          colorScheme:
+          ColorScheme.fromSeed(seedColor: Colors.deepPurple).copyWith(
+            primary: Colors.deepPurple,
+            surface: Colors.deepPurple[50],
+          ),
+          useMaterial3: true,
         ),
-        colorScheme:
-        ColorScheme.fromSeed(seedColor: Colors.deepPurple).copyWith(
-          primary: Colors.deepPurple,
-          surface: Colors.deepPurple[50]
-        ),
-        useMaterial3: true,
-      ),
-
-      // home: ProfileScreen(),
-      // home: SearchScreen(),
-      // home: DetailScreen(candi: candiList[0]),
-      // home: SignInScreen()
-      // home: SignUpScreen()
-      // home: HomeScreen() 
-      home: MainScreen(),
+        initialRoute: '/signin',
+        routes: {
+          '/': (context) => const MainScreen(),
+          '/signin': (context) => const SignInScreen(),
+          '/signup': (context) => const SignUpScreen(),
+        }
     );
   }
 }
@@ -59,59 +57,66 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // TODO: 1. Buat properti body berupa widget yang ditampilkan
+  // TODO: 1. Deklarasi variabel
   int _currentIndex = 0;
-  final List<Widget> _childern = [
+  final List<Widget> _children = [
     HomeScreen(),
     SearchScreen(),
     FavoriteScreen(),
-    ProfileScreen()
+    ProfileScreen(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // TODO: 2. Buat properti body berupa widget yang ditampilkan
-      body: _childern[_currentIndex],
-      // TODO: 3. Buat Properti bottomNavigationBar dengan nilai theme
+      //   TODO: 2. Buat properti body berupa widget yang ditampilkan
+      body: _children[
+      _currentIndex
+      ],
+      //   TODO: 3. Buat properti bottomNavigationBar dengan nilai Theme
       bottomNavigationBar: Theme(
-      // TODO: 4. Buat Properti Data dan Child dari Theme
+        //   TODO: 4. Buat data dan child dari Theme
         data: Theme.of(context).copyWith(
-          canvasColor: Colors.deepPurple[50]
+          canvasColor: Colors.deepPurple[50],
         ),
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
-          onTap: (index){
+          onTap: (index) {
             setState(() {
               _currentIndex = index;
             });
           },
           items: const [
-            BottomNavigationBarItem(
-              icon: Icon(Icons.home, color: Colors.deepPurple,),
-              label: 'Home'
+            BottomNavigationBarItem(icon:
+            Icon(Icons.home,
+                color: Colors.deepPurple
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.search, color: Colors.deepPurple,),
-              label: 'Search'  
+                label: 'Home'
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.favorite, color: Colors.deepPurple,),
-              label: 'Favorite'
+            BottomNavigationBarItem(icon:
+            Icon(Icons.search,
+                color: Colors.deepPurple
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.person, color: Colors.deepPurple,),
-              label: 'Profile'
-            )
-            ],
-            selectedItemColor: Colors.deepPurple,
-            unselectedItemColor: Colors.deepPurple[100],
-            showUnselectedLabels: true,
-        )),
-      
-
+                label: 'Search'
+            ),
+            BottomNavigationBarItem(icon:
+            Icon(Icons.favorite,
+                color: Colors.deepPurple
+            ),
+                label: 'Favorite'
+            ),
+            BottomNavigationBarItem(icon:
+            Icon(Icons.person,
+                color: Colors.deepPurple
+            ),
+                label: 'Profile'
+            ),
+          ],
+          selectedItemColor: Colors.deepPurple,
+          unselectedItemColor: Colors.deepPurple[100],
+          showUnselectedLabels: true,
+        ),
+      ),
     );
   }
 }
-
-
