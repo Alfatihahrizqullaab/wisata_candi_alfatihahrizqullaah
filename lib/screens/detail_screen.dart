@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:wisata_candi_alfatihahrizqullaah/models/candi.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -11,6 +12,28 @@ class DetailScreen extends StatefulWidget {
 }
 
 class _DetailScreenState extends State<DetailScreen> {
+  bool isFavorite = false;
+  bool isSignedIn = false;
+
+  Future<void> _toggleFavorite() async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+  
+    // Memeriksa apakah pengguna sudah sign in
+    if(!isSignedIn){
+      // jika belum sign in, arahkan ke SignInScreen
+      WidgetsBinding.instance.addPostFrameCallback((_){
+        Navigator.pushReplacementNamed(context, '/signin');
+      });
+      return;
+    }
+
+    bool favoriteStatus = !isFavorite;
+    prefs.setBool('favorite_${widget.candi.name}', favoriteStatus);
+
+    setState(() {
+      isFavorite = favoriteStatus;
+    });
+  }
   bool isFavorite = false;
 
   @override

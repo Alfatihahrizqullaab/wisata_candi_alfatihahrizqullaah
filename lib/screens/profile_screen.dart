@@ -10,16 +10,14 @@ class ProfileScreen extends StatefulWidget{
 
 class _ProfileScreenState extends State<ProfileScreen>{
   // TODO: 1 DEKLARASIKAN VARIABEL YANG DIBUTUHKAN
-  bool isSignedIn = true;
+  bool isSignedIn = false;
   String fullName = 'Alfatilah Rizqullaah';
   String userName = 'Alfarizz';
   int favoriteCandiCount = 7;
 
   // TODO 5: Implementasi FUNGSI SIGN IN
   void signIn(){
-    setState(() {
-      isSignedIn = !isSignedIn;
-    });
+    Navigator.pushNamed(context, '/signin');
   }
   // TODO 6: IMPLEMENTASI FUNGSI SIGN OUT
   void signOut(){
