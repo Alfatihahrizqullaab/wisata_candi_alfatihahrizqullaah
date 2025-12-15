@@ -109,9 +109,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 // TODO: 7. Pasang ElevatedButton Sign In
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: (){
-                    Navigator.pushReplacementNamed(context, '/');
-                  },
+                  onPressed: _signIn,
                   child: Text('Sign In',
                   ),
                 ),

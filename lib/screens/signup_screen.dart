@@ -29,14 +29,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
     if(password.length < 8 || 
       !password.contains(RegExp(r'[A-Z]')) ||
       !password.contains(RegExp(r'[a-z]')) ||
-      !password.contains(RegExp(r'[8-9]')) ||
-      !password.contains(RegExp(r'[!@#$%^&*()<>?":{}<>]'))
+      !password.contains(RegExp(r'[0-9]')) ||
+      !password.contains(RegExp(r'[!@#$%^&*(),.?":{}|<>]'))
       ){
         setState(() {
-          _errorText = 'Minimal 8 karakter, kombinasi [A-Z], [a-z], [8-9], [!@#\\\$%^&*()<>?":{}<>]';
+          _errorText = 'Minimal 8 karakter, kombinasi [A-Z], [a-z], [0-9], [!@#\\\$%^&*()<>?":{}<>]';
         });
         return;
       } 
+
       // simpan data pengguna di SharedPreferances
       prefs.setString('fullname', fullname);
       prefs.setString('username', username);
@@ -50,6 +51,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   void dispose(){
     _fullnameController.dispose();
+    _usernameController.dispose();
+    _passwordController.dispose();
+    super.dispose();
   }
 
   @override
@@ -62,88 +66,87 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.all(16),
-            child: Column(
-              // TODO: 4. Atur mainAxisAligment dan crossAxisAligment
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                // TODO: 5. Pasang TextFormField Nama Lengkap
-                TextFormField(
-                  controller: _fullnameController,
-                  decoration: InputDecoration(
-                    labelText: "Nama Lengkap",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                // TODO: 6. Pasang TextFormField Nama Pengguna
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: _usernameController,
-                  decoration: InputDecoration(
-                    labelText: "Nama Pengguna",
-                    border: OutlineInputBorder(),
-                  ),
-                ),
-                // TODO: 7. Pasang TextFormField Kata Sandi
-                SizedBox(height: 20),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: InputDecoration(
-                    labelText: "Kata Sandi",
-                    errorText: _errorText.isNotEmpty ? _errorText : null,
-                    border: OutlineInputBorder(),
-                    suffixIcon: IconButton(
-                      onPressed: (){
-                        setState(() {
-                          _obscurePassword = !_obscurePassword;
-                        });
-                      },
-                      icon: Icon(
-                        _obscurePassword ? Icons.visibility_off
-                            : Icons.visibility,
-                      ),
+            child: Form(
+              child: Column(
+                // TODO: 4. Atur mainAxisAligment dan crossAxisAligment
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  // TODO: 5. Pasang TextFormField Nama Lengkap
+                  TextFormField(
+                    controller: _fullnameController,
+                    decoration: InputDecoration(
+                      labelText: "Nama Lengkap",
+                      border: OutlineInputBorder(),
                     ),
                   ),
-                  obscureText: _obscurePassword,
-                ),
-                // TODO: 8. Pasang ElevatedButton Sign In
-                SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: (){
-                    Navigator.pushReplacementNamed(context, '/signin');
-                  },
-                  child: Text('Sign Up',
-                  ),
-                ),
-                // TODO: 9. Pasang ElevatedButton Sign Un
-                SizedBox(height: 10),
-                RichText(
-                  text: TextSpan(
-                    text: 'Sudah punya akun? ',
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Colors.deepPurple
+                  // TODO: 6. Pasang TextFormField Nama Pengguna
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: _usernameController,
+                    decoration: InputDecoration(
+                      labelText: "Nama Pengguna",
+                      border: OutlineInputBorder(),
                     ),
-                    children: <TextSpan> [
-                      TextSpan(
-                        text: 'Login',
-                        style: TextStyle(
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline,
-                            fontSize: 16
+                  ),
+                  // TODO: 7. Pasang TextFormField Kata Sandi
+                  SizedBox(height: 20),
+                  TextFormField(
+                    controller: _passwordController,
+                    decoration: InputDecoration(
+                      labelText: "Kata Sandi",
+                      errorText: _errorText.isNotEmpty ? _errorText : null,
+                      border: OutlineInputBorder(),
+                      suffixIcon: IconButton(
+                        onPressed: (){
+                          setState(() {
+                            _obscurePassword = !_obscurePassword;
+                          });
+                        },
+                        icon: Icon(
+                          _obscurePassword ? Icons.visibility_off
+                              : Icons.visibility,
                         ),
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.pushNamed(context, '/signin');
-                          },
                       ),
-                    ],
+                    ),
+                    obscureText: _obscurePassword,
                   ),
-                ),
-              ],
+                  // TODO: 8. Pasang ElevatedButton Sign In
+                  SizedBox(height: 20),
+                  ElevatedButton(
+                    onPressed: _signUp,
+                    child: Text('Sign Up'),
+                  ),
+                  // TODO: 9. Pasang ElevatedButton Sign Un
+                  SizedBox(height: 10),
+                  RichText(
+                    text: TextSpan(
+                      text: 'Sudah punya akun? ',
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.deepPurple
+                      ),
+                      children: <TextSpan> [
+                        TextSpan(
+                          text: 'Login',
+                          style: TextStyle(
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                              fontSize: 16
+                          ),
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(context, '/signin');
+                            },
+                        ),
+                      ],
+                    ),
+                  ),
+                ],
             ),
           ),
         ),
+        )
       ),
     );
   }

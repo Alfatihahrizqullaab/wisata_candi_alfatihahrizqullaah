@@ -13,7 +13,32 @@ class DetailScreen extends StatefulWidget {
 
 class _DetailScreenState extends State<DetailScreen> {
   bool isFavorite = false;
-  bool isSignedIn = false;
+  bool isSignedIn = false; // menyimpan status signIn
+
+  @override
+  void initState(){
+    super.initState();
+    _checkSignInStatus(); // memerika status in saat layar dimuat
+    _loadFavoriteStatus(); // memeriksa status favorite saat layar dimuat
+  }
+
+  // Memeriksa status sign in
+  void _checkSignInStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool signedIn = prefs.getBool('isSignedIn') ?? false;
+    setState(() {
+      isSignedIn = signedIn;
+    });
+  }
+
+  // Memeriksa status favorit
+  void _loadFavoriteStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool favorite = prefs.getBool('favorite_${widget.candi.name}') ?? false;
+    setState(() {
+      isFavorite = favorite;
+    });
+  }
 
   Future<void> _toggleFavorite() async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -34,7 +59,6 @@ class _DetailScreenState extends State<DetailScreen> {
       isFavorite = favoriteStatus;
     });
   }
-  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
@@ -91,15 +115,12 @@ class _DetailScreenState extends State<DetailScreen> {
                       ),
                       IconButton(
                         onPressed: () {
-                          setState(() {
-                            isFavorite = !isFavorite;
-                          });
+                          _toggleFavorite();
                         },
-                        icon: Icon(
-                          isFavorite
-                              ? Icons.favorite
-                              : Icons.favorite_border,
-                          color: isFavorite ? Colors.red : Colors.grey,
+                        icon: Icon(isSignedIn && isFavorite
+                            ? Icons.favorite : Icons.favorite_border,
+                          color: isSignedIn && isFavorite ? Colors.red : null,
+                          
                         ),
                       )
                     ],
@@ -151,7 +172,7 @@ class _DetailScreenState extends State<DetailScreen> {
                     ],
                   ),
 
-                  const SizedBox(height: 16),
+                  const SizedBox(height: 16), 
                   Divider(color: Colors.deepPurple.shade100),
                   const SizedBox(height: 16),
 
