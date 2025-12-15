@@ -27,10 +27,18 @@ class ProfileInfoItem extends StatelessWidget{
             children: [
               Icon(icon, color: iconColor),
               SizedBox(width: 8),
-              Text(
-                label ,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              Expanded(
+                child: Text(
+                  label ,
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+                
               ),
+              
             ],
           ),
         ),
@@ -38,6 +46,8 @@ class ProfileInfoItem extends StatelessWidget{
           child: Text(
             ': ${value.toString()}',
             style: TextStyle(fontSize: 18),
+            overflow: TextOverflow.ellipsis, // ✅ FIX
+            
           ),
         ),
         if (showEditIcon)
