@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:encrypt/encrypt.dart' as encrypt;
 
 class SignUpScreen extends StatefulWidget{
    const SignUpScreen({super.key});
@@ -38,14 +39,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
         return;
       } 
 
-      // simpan data pengguna di SharedPreferances
-      prefs.setString('fullname', fullname);
-      prefs.setString('username', username);
-      prefs.setString('password', password);
+      if (fullname.isEmpty || username.isEmpty || password.isEmpty) {
+        setState(() {
+          _errorText = 'Semua field wajib diisi';
+        });
+        return;
+      }
 
-      // Buat navigasi ke SignInScreen
+      final encrypt.Key key = encrypt.Key.fromLength(32);
+      final encrypt.IV iv = encrypt.IV.fromLength(16);
+      final encrypt.Encrypter encrypter = encrypt.Encrypter(encrypt.AES(key));
+
+      final encryptedFullname = encrypter.encrypt(fullname, iv: iv);
+      final encryptedUsername = encrypter.encrypt(username, iv: iv);
+      final encryptedPassword = encrypter.encrypt(password, iv: iv);
+
+      await prefs.setString('fullname', encryptedFullname.base64);
+      await prefs.setString('username', encryptedUsername.base64);
+      await prefs.setString('password', encryptedPassword.base64);
+      await prefs.setString('key', key.base64);
+      await prefs.setString('iv', iv.base64);
+
       Navigator.pushReplacementNamed(context, '/signin');
   }
+
+
 
   // TODO: 2. Membuat metode dispose
   @override

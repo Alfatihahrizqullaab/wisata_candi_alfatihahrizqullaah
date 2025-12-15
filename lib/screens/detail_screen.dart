@@ -68,15 +68,17 @@ class _DetailScreenState extends State<DetailScreen> {
           children: [
             Stack(
               children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(20),
-                    child: Image.asset(
-                      widget.candi.imageAsset,
-                      width: double.infinity,
-                      height: 300,
-                      fit: BoxFit.cover,
+                Hero(tag: widget.candi.imageAsset, 
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(20),
+                      child: Image.asset(
+                        widget.candi.imageAsset,
+                        width: double.infinity,
+                        height: 300,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                 ),
@@ -96,9 +98,6 @@ class _DetailScreenState extends State<DetailScreen> {
                 )
               ],
             ),
-
-            
-
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
@@ -125,9 +124,7 @@ class _DetailScreenState extends State<DetailScreen> {
                       )
                     ],
                   ),
-
                   const SizedBox(height: 16),
-
                   /// INFORMASI (LOKASI - DIBANGUN - TIPE)
                   Row(
                     children: [

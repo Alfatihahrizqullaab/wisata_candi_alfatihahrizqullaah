@@ -32,8 +32,9 @@ class ItemCard extends StatelessWidget {
             Expanded(
               // TODO 7. Implementasi Hero animation
               child: Hero(
-                tag: candi.name,
+                tag: candi.imageAsset,
                 child: ClipRRect(
+                  borderRadius: BorderRadius.circular(15),
                   child: Image.asset(
                     candi.imageAsset,
                     width: double.infinity,
