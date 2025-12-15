@@ -46,7 +46,7 @@ class ProfileInfoItem extends StatelessWidget{
           child: Text(
             ': ${value.toString()}',
             style: TextStyle(fontSize: 18),
-            overflow: TextOverflow.ellipsis, // ✅ FIX
+            overflow: TextOverflow.ellipsis,
             
           ),
         ),
